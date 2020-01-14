@@ -92,8 +92,8 @@ class HashTable:
  
         while node is not None:
             if node.key == key:
-                print(f'key: {node.key}, value: {node.value} - count: {self.count} - capacity: {self.capacity}')
-                node = None
+                # print(f'key: {node.key}, value: {node.value} - count: {self.count} - capacity: {self.capacity}')
+                node.value = None
                 self.count -= 1
                 if self.count <= self.capacity*0.2: self.resize_smaller()
                 return
@@ -141,19 +141,14 @@ class HashTable:
 
     def resize_smaller(self):
         if self.capacity > self.original_capacity:
-            print('\n\nIT WAS CALLED*****************\n\n')
             old_storage = self.storage
             self.capacity = self.capacity//2
             self.storage = [None] * self.capacity
             self.count = 0
-            print(self.count)
 
-            node_counter = 0
             for node in old_storage:
-                node_counter += 1
-                print(node_counter)
-                while node is not None:
-                    print(f'insert: key: {node.key}, value: {node.value}, count: {self.count}')
+                while node is not None and node.value is not None:
+                    # print(f'insert: key: {node.key}, value: {node.value}, count: {self.count}')
                     self.insert(node.key, node.value)
                     node = node.next
 
