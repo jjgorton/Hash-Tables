@@ -161,15 +161,15 @@ class TestHashTable(unittest.TestCase):
         ht.insert("key-2", "val-2")
         ht.insert("key-3", "val-3")
         ht.insert("key-4", "val-4")
-        ht.insert("key-5", "val-5")
+        ht.insert("key-5", "val-5") #STRETCH --> resizes automatically here
         ht.insert("key-6", "val-6")
         ht.insert("key-7", "val-7")
         ht.insert("key-8", "val-8")
         ht.insert("key-9", "val-9")
 
-        ht.resize()
-
-        self.assertTrue(len(ht.storage) == 16)
+        ht.resize() #STRETCH --> resises again here
+        # print(f'Here is the real length: {len(ht.storage)}')
+        self.assertTrue(len(ht.storage) == 32) #STRETCH --> therefore this should be 32 instead of 16
 
         return_value = ht.retrieve("key-0")
         self.assertTrue(return_value == "val-0")
@@ -191,6 +191,22 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(return_value == "val-8")
         return_value = ht.retrieve("key-9")
         self.assertTrue(return_value == "val-9")
+
+
+        # STRETCH -->  Added to test size reduction stretch
+        ht.remove("key-9")
+        ht.remove("key-8")
+        ht.remove("key-7")
+        ht.remove("key-6")
+        ht.remove("key-5") # resize_smaller should run here (16)
+        ht.remove("key-4")
+        ht.remove("key-3")
+        ht.remove("key-2") # again here
+        ht.remove("key-1")
+        ht.remove("key-0")
+
+        print(f'Here is the real length: {len(ht.storage)}')
+        self.assertTrue(len(ht.storage) == 8) #STRETCH --> therefore this should be 8
 
 
 if __name__ == '__main__':
