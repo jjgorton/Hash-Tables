@@ -1,3 +1,5 @@
+
+
 # '''
 # Linked List hash table key/value pair
 # '''
@@ -23,7 +25,12 @@ class HashTable:
 
         You may replace the Python hash with DJB2 as a stretch goal.
         '''
-        return hash(key)
+        str_values = []
+        for char in list(key):
+            str_values.append(ord(char))
+
+        # return hash(key)
+        return sum(str_values)
 
 
     def _hash_djb2(self, key):
@@ -51,7 +58,17 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        node = self.storage[index]
+        if self.storage[index] is None:
+            self.storage[index] = LinkedPair(key, value)
+        else:    
+            while node is not None:
+                if node.next is None:
+                    node.next = LinkedPair(key, value)
+                    node = node.next.next
+                else:
+                    node = node.next
 
 
 
@@ -74,7 +91,23 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        node = self.storage[index]
+        # if self.storage[index].key == key:
+        #     return self.storage[index].value
+        # else:
+        while node is not None:
+            if node.key == key:
+                return node.value
+            else:
+                node = node.next
+
+        return None
+
+            # if self.storage[index].next is None:
+            #     return None
+            # else:
+            #     self.storage[index].next.retrieve(key)
 
 
     def resize(self):
@@ -86,7 +119,9 @@ class HashTable:
         '''
         pass
 
-
+test = HashTable(3)
+test_hash = test._hash_mod("testing")
+print(test_hash)
 
 if __name__ == "__main__":
     ht = HashTable(2)
