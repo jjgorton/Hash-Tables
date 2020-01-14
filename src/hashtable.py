@@ -122,7 +122,16 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        old_storage = self.storage
+        self.capacity = self.capacity*2
+        self.storage = [None] * self.capacity
+
+        for node in old_storage:
+            while node is not None:
+                self.insert(node.key, node.value)
+                node = node.next
+
+
 
 test = HashTable(3)
 test_hash = test._hash_mod("testing")
